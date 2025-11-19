@@ -1,0 +1,4 @@
+cargo tauri icon image.png
+
+これでiconを一括制御できる
+

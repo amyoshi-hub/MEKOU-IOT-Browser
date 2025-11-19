@@ -1,0 +1,74 @@
+[package]
+name = "app"
+version = "0.1.0"
+description = "A Tauri App"
+authors = ["you"]
+license = "MIT"
+repository = ""
+edition = "2021"
+rust-version = "1.77.2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.2.0", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4"
+tauri = { version = "2.5.1", features = ["unstable"] }
+#tauri = { version = "2.x.x", features = ["invoke"] }
+tauri-plugin-log = "2.0.0-rc"
+reqwest = "0.12.20"
+tokio = { version = "1.0", features = ["full"] }
+wry = "0.51.2"
+tao = "0.33.0"
+chrono = "0.4.41"
+winit = "0.30.11"
+#gtk = "0.18.2"
+url = "2.5.4"
+tempfile = "3.20.0"
+hex = "0.4.3"
+rand = "0.9.1"
+zip = "4.1.0"
+uuid = { version = "1.0", features = ["v4"] }
+pnet = "0.35.0"
+tokio-tungstenite = "0.27.0"
+futures-util = "0.3.31"
+dialog = "0.3.0"
+warp = "0.3.7"
+base64 = "0.22.1"
+once_cell = "1.21.3"
+
+
+[features]
+default = ["gui"]
+gui = []
+cui = []
+
+[target.'cfg(unix)'.dependencies]
+x11-dl = "2.21.0"
+
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc" # 以前設定したもの
+# ここから追加
+rustflags = [
+    "-C", "link-arg=-lgcc",
+    "-C", "link-arg=-lstdc++",
+    "-C", "link-arg=-lm",
+    # 必要に応じて追加
+]
+
+[build]
+# PKG_CONFIG が sysroot を参照するように設定
+# PKG_CONFIG_SYSROOT_DIR は、ターゲットのルートディレクトリ（/usr, /lib などを含む）を指す
+# PKG_CONFIG_PATH は、ターゲットの .pc ファイルが置かれているディレクトリ（/usr/lib/aarch64-linux-gnu/pkgconfig など）を指す
+# 正しいパスはあなたの sysroot 構造によるので調整が必要
+rustflags = [
+    "-C", "link-arg=--sysroot=/home/amyoshi9/git/OSAI-browser/src-tauri/sysroot/aarch64-raspi",
+]

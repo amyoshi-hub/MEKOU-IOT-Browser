@@ -1,0 +1,13 @@
+
+-arctype
+session_id:16byte
+chunk:8byte
+data_vec:16byte
+	-format_signal:2byte
+	-data_vec:14byte
+data:flexible
+(hash_quantum_security:16byte)
+
+hash_quantum_sec
+復元用ハッシュと迷うが再送を採用するか悩む
+quantum_secはBB84プロトコルのことを言っている、量子コンピューターとのセキュリティとの連携を図る
